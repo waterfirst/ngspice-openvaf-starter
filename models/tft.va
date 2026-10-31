@@ -1,0 +1,50 @@
+// Educational three-terminal TFT compact model.
+// This is a synthetic model for the GW example, not a measured device card.
+`include "constants.vams"
+`include "disciplines.vams"
+
+module tft(d, g, s);
+  inout d, g, s;
+  electrical d, g, s;
+  parameter real W = 3e-6 from (0:inf);
+  parameter real L = 3e-6 from (0:inf);
+  parameter real CI = 3.45e-4 from (0:inf);
+  parameter real COV = 1e-10 from [0:inf);
+  parameter real VTH = 0.6;
+  parameter real U0 = 12 from (0:inf);
+  parameter real GAMMA = 0.2 from [0:1);
+  parameter real SS = 0.15 from (0:inf);
+  parameter real LAMBDA = 0.01 from [0:inf);
+  parameter real GOFF = 2e-16 from [0:inf);
+  parameter real POL = -1.0 from [-1:1];
+  parameter real TEMPK = 298.15 from (0:inf);
+
+  real vt, n, vtn, sgn, vov_s, vov_d, x, veff, vds, mu, vdse, id, qs, qd;
+  analog function real softplus;
+    input xx; real xx;
+    begin
+      if (xx > 40.0) softplus = xx;
+      else if (xx < -40.0) softplus = exp(xx);
+      else softplus = ln(1.0 + exp(xx));
+    end
+  endfunction
+  analog begin
+    vt = `P_K * TEMPK / `P_Q;
+    n = SS / (vt * ln(10.0));
+    vtn = -POL * VTH;
+    vov_s = POL * V(s, g) - vtn;
+    vov_d = POL * V(d, g) - vtn;
+    if (vov_s >= vov_d) begin sgn = 1.0; vds = POL * V(s, d); x = vov_s; end
+    else begin sgn = -1.0; vds = POL * V(d, s); x = vov_d; end
+    veff = n * vt * softplus(x / (n * vt));
+    mu = U0 * 1e-4 * pow(veff + 1e-9, GAMMA);
+    vdse = vds / pow(1.0 + pow(vds / (veff + 1e-12), 4.0), 0.25);
+    id = CI * W / L * mu * (veff * vdse - 0.5 * vdse * vdse) *
+         (1.0 + LAMBDA * vds) + GOFF * vds;
+    I(s, d) <+ POL * sgn * id;
+    qs = 0.5 * CI * W * L * n * vt * softplus(vov_s / (n * vt)) + COV * W * POL * V(s, g);
+    qd = 0.5 * CI * W * L * n * vt * softplus(vov_d / (n * vt)) + COV * W * POL * V(d, g);
+    I(s, g) <+ POL * ddt(qs);
+    I(d, g) <+ POL * ddt(qd);
+  end
+endmodule

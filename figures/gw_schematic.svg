@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620">
+  <style>text{font-family:Arial,sans-serif;fill:#152238} .t{font-size:18px;font-weight:bold}.s{font-size:14px}.box{fill:#f7fbff;stroke:#1e5aa8;stroke-width:2}.wire{fill:none;stroke:#263746;stroke-width:3}.sig{fill:none;stroke:#e16a28;stroke-width:3}.node{fill:#1e5aa8}</style>
+  <rect width="1200" height="620" fill="white"/><text x="45" y="45" class="t">6-stage educational GW pulse chain (synthetic oxide-NMOS model)</text>
+  <text x="45" y="78" class="s">Each stage: ratioed latch (M1–M7) + output path (M8–M10). The final stage is followed by a dummy load.</text>
+  <path class="wire" d="M90 220H1070"/><text x="86" y="207" class="s">VST / carry path</text>
+  <path class="sig" d="M90 135H1070"/><text x="86" y="121" class="s">CKA / CKB (alternating)</text>
+  <g>
+    <rect class="box" x="100" y="180" width="130" height="145" rx="10"/><text x="127" y="218" class="t">STAGE 1</text><text x="120" y="246" class="s">M1–M7 latch</text><text x="116" y="269" class="s">M8–M10 output</text><path class="wire" d="M165 220V180M165 325V385"/><circle class="node" cx="165" cy="220" r="5"/><path class="sig" d="M165 135V180"/><text x="135" y="413" class="t">OUT1</text>
+    <rect class="box" x="280" y="180" width="130" height="145" rx="10"/><text x="307" y="218" class="t">STAGE 2</text><text x="300" y="246" class="s">M1–M7 latch</text><text x="296" y="269" class="s">M8–M10 output</text><path class="wire" d="M345 220V180M345 325V385"/><circle class="node" cx="345" cy="220" r="5"/><path class="sig" d="M345 135V180"/><text x="315" y="413" class="t">OUT2</text>
+    <rect class="box" x="460" y="180" width="130" height="145" rx="10"/><text x="487" y="218" class="t">STAGE 3</text><text x="480" y="246" class="s">M1–M7 latch</text><text x="476" y="269" class="s">M8–M10 output</text><path class="wire" d="M525 220V180M525 325V385"/><circle class="node" cx="525" cy="220" r="5"/><path class="sig" d="M525 135V180"/><text x="495" y="413" class="t">OUT3</text>
+    <rect class="box" x="640" y="180" width="130" height="145" rx="10"/><text x="667" y="218" class="t">STAGE 4</text><text x="660" y="246" class="s">M1–M7 latch</text><text x="656" y="269" class="s">M8–M10 output</text><path class="wire" d="M705 220V180M705 325V385"/><circle class="node" cx="705" cy="220" r="5"/><path class="sig" d="M705 135V180"/><text x="675" y="413" class="t">OUT4</text>
+    <rect class="box" x="820" y="180" width="130" height="145" rx="10"/><text x="847" y="218" class="t">STAGE 5</text><text x="840" y="246" class="s">M1–M7 latch</text><text x="836" y="269" class="s">M8–M10 output</text><path class="wire" d="M885 220V180M885 325V385"/><circle class="node" cx="885" cy="220" r="5"/><path class="sig" d="M885 135V180"/><text x="855" y="413" class="t">OUT5</text>
+    <rect class="box" x="1000" y="180" width="130" height="145" rx="10"/><text x="1027" y="218" class="t">STAGE 6</text><text x="1020" y="246" class="s">M1–M7 latch</text><text x="1016" y="269" class="s">M8–M10 output</text><path class="wire" d="M1065 220V180M1065 325V385"/><circle class="node" cx="1065" cy="220" r="5"/><path class="sig" d="M1065 135V180"/><text x="1035" y="413" class="t">OUT6</text>
+  </g>
+  <path class="wire" d="M1065 220V490H1120M1120 490V530M1100 530H1140M1105 545H1135M1112 560H1128"/><text x="1030" y="585" class="s">dummy load</text>
+  <text x="60" y="505" class="s">Rails: VGH = +8 V, VGL = −8 V.  The public example uses an educational synthetic card, not a measured panel card.</text>
+</svg>

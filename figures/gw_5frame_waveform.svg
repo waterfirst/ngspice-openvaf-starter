@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+ <style>text{font-family:Arial,sans-serif;fill:#182436}.h{font-size:20px;font-weight:bold}.l{font-size:15px}.a{stroke:#ccd6e0;stroke-width:1}.g{stroke:#dbe5ee;stroke-width:1;stroke-dasharray:5 5}.w{fill:none;stroke:#1769aa;stroke-width:3}</style>
+ <rect width="1200" height="720" fill="white"/><text x="45" y="38" class="h">Reference GW waveform — five repeated frames, one scheduled pulse per output</text><text x="45" y="62" class="l">Illustrative rendering of the pass criterion used by the runnable six-stage example. Vertical dashed lines mark frame boundaries.</text>
+ <g class="g"><path d="M60 80V680M280 80V680M500 80V680M720 80V680M940 80V680M1160 80V680"/></g>
+ <g class="a"><path d="M60 120H1160M60 200H1160M60 280H1160M60 360H1160M60 440H1160M60 520H1160M60 600H1160M60 680H1160"/></g>
+ <g class="l"><text x="12" y="125">VST</text><text x="8" y="205">CKA</text><text x="8" y="285">CKB</text><text x="2" y="365">OUT1</text><text x="2" y="445">OUT2</text><text x="2" y="525">OUT3</text><text x="2" y="605">OUT4–6</text><text x="148" y="705">Frame 1</text><text x="368" y="705">Frame 2</text><text x="588" y="705">Frame 3</text><text x="808" y="705">Frame 4</text><text x="1028" y="705">Frame 5</text></g>
+ <path class="w" d="M60 120H90V95H130V120H280H310V95H350V120H500H530V95H570V120H720H750V95H790V120H940H970V95H1010V120H1160"/>
+ <path class="w" d="M60 200H115V175H145V200H170V175H200V200H280H335V175H365V200H390V175H420V200H500H555V175H585V200H610V175H640V200H720H775V175H805V200H830V175H860V200H940H995V175H1025V200H1050V175H1080V200H1160"/>
+ <path class="w" d="M60 280H225V255H255V280H280H445V255H475V280H500H665V255H695V280H720H885V255H915V280H940H1105V255H1135V280H1160"/>
+ <path class="w" d="M60 360H150V330H180V360H280H370V330H400V360H500H590V330H620V360H720H810V330H840V360H940H1030V330H1060V360H1160"/>
+ <path class="w" d="M60 440H185V410H215V440H280H405V410H435V440H500H625V410H655V440H720H845V410H875V440H940H1065V410H1095V440H1160"/>
+ <path class="w" d="M60 520H220V490H250V520H280H440V490H470V520H500H660V490H690V520H720H880V490H910V520H940H1100V490H1130V520H1160"/>
+ <path class="w" d="M60 600H255V570H275V600H280H475V570H495V600H500H695V570H715V600H720H915V570H935V600H940H1135V570H1155V600H1160"/>
+ <text x="64" y="652" class="l">Each OUT stage has exactly one pulse in its own slot. The actual script checks this condition numerically.</text>
+</svg>

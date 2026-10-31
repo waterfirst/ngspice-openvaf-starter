@@ -1,5 +1,17 @@
 # ngspice + OpenVAF 간단 회로 시뮬레이션 안내
 
+> 바로 실행할 예제는 두 개다. 저항 분압기와 6단 GW(게이트 파형) 펄스 체인이다.
+
+## 예제 목록
+
+1. **저항 분압기** — Verilog-A 저항 모델을 OSDI로 만들고, 1 V 입력에서 0.5 V 출력인지 확인한다.
+2. **6단 GW 펄스 체인** — 합성 oxide-NMOS TFT 모델을 OSDI로 만들고, OUT1~OUT6이
+   순서대로 한 번씩 펄스가 나오는지 검사한다.
+
+GW 회로도와 5프레임 기준 파형, 논문 주장과 검증 범위는
+[`docs/paper_and_verification_ko.md`](docs/paper_and_verification_ko.md)에 있다.
+실제 문턱전압 스윕 결과는 [`docs/gw_validation_result_ko.md`](docs/gw_validation_result_ko.md)에 있다.
+
 Ubuntu에서 Verilog-A 모델을 OpenVAF로 컴파일하고, ngspice OSDI로 불러
 간단한 회로를 시뮬레이션하는 최소 예제다.
 
