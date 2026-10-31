@@ -8,7 +8,7 @@
   <style>
     :root { --ink:#162233; --muted:#566578; --line:#dce4ec; --paper:#fff; --wash:#f4f8fc; --blue:#1263ad; --green:#087c54; --amber:#9a5b00; --red:#b42318; }
     *{box-sizing:border-box} body{margin:0;background:var(--wash);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,"Noto Sans KR",sans-serif;line-height:1.65}
-    .wrap{max-width:1120px;margin:auto;padding:0 24px 64px}.hero{padding:70px 0 45px}.eyebrow{color:var(--blue);font-weight:800;letter-spacing:.08em;font-size:.78rem}.hero h1{font-size:clamp(2rem,5vw,3.8rem);line-height:1.13;letter-spacing:-.055em;margin:10px 0 17px}.hero p{font-size:1.1rem;color:var(--muted);max-width:760px;margin:0}.badges{display:flex;gap:9px;flex-wrap:wrap;margin-top:24px}.badge{padding:5px 11px;border-radius:999px;background:#e7f2ff;color:#075092;font-size:.83rem;font-weight:750}.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:30px;margin:18px 0;box-shadow:0 7px 22px #1d44680b}.card h2{font-size:1.45rem;letter-spacing:-.03em;margin:0 0 13px}.card h3{font-size:1.05rem;margin:25px 0 8px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.metric{border:1px solid var(--line);border-radius:13px;padding:17px}.metric strong{display:block;font-size:1.6rem;letter-spacing:-.04em}.metric span{font-size:.87rem;color:var(--muted)}.pass{color:var(--green)}.fail{color:var(--red)}.note{border-left:4px solid var(--amber);background:#fff9ed;padding:14px 17px;border-radius:0 10px 10px 0;color:#624300}.figure{margin:18px 0;padding:14px;background:#fbfdff;border:1px solid var(--line);border-radius:13px}.figure img{width:100%;display:block}.figure figcaption{font-size:.9rem;color:var(--muted);margin:10px 4px 2px}table{width:100%;border-collapse:collapse;font-size:.94rem}th,td{padding:11px 10px;text-align:center;border-bottom:1px solid var(--line)}th{background:#f2f7fb;color:#304257}td:first-child,th:first-child{text-align:left}.ok{font-weight:750;color:var(--green)}.no{font-weight:750;color:var(--red)}pre{background:#102033;color:#eaf2fb;padding:16px;border-radius:12px;overflow:auto;font-size:.88rem}a{color:var(--blue);font-weight:700;text-underline-offset:3px}.footer{color:var(--muted);font-size:.87rem;padding:20px 4px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:19px}.button{display:inline-block;background:var(--blue);color:white;text-decoration:none;padding:9px 13px;border-radius:9px;font-size:.9rem}.button.alt{background:#e8f1f9;color:#12558d}@media(max-width:700px){.wrap{padding:0 15px 45px}.hero{padding:45px 0 28px}.card{padding:21px}.grid{grid-template-columns:1fr}.hero h1{font-size:2.2rem}table{font-size:.8rem}th,td{padding:8px 4px}}
+    .wrap{max-width:1120px;margin:auto;padding:0 24px 64px}.hero{padding:70px 0 45px}.eyebrow{color:var(--blue);font-weight:800;letter-spacing:.08em;font-size:.78rem}.hero h1{font-size:clamp(2rem,5vw,3.8rem);line-height:1.13;letter-spacing:-.04em;margin:10px 0 17px}.hero p{font-size:1.1rem;color:var(--muted);max-width:760px;margin:0}.badges{display:flex;gap:9px;flex-wrap:wrap;margin-top:24px}.badge{padding:5px 11px;border-radius:999px;background:#e7f2ff;color:#075092;font-size:.83rem;font-weight:750}.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:30px;margin:18px 0}.card h2{font-size:1.45rem;letter-spacing:-.03em;margin:0 0 13px}.card h3{font-size:1.05rem;margin:25px 0 8px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.metric{border:1px solid var(--line);border-radius:13px;padding:17px}.metric strong{display:block;font-size:1.6rem;letter-spacing:-.04em}.metric span{font-size:.87rem;color:var(--muted)}.pass{color:var(--green)}.note{border-left:1px solid var(--amber);background:#fff9ed;padding:14px 17px;border-radius:0 10px 10px 0;color:#624300}.figure{margin:18px 0;padding:14px;background:#fbfdff;border:1px solid var(--line);border-radius:13px}.zoomable{display:block;width:100%;border:0;background:transparent;padding:0;cursor:zoom-in}.zoomable img{width:100%;display:block}.zoomable:focus-visible{outline:3px solid #1263ad;outline-offset:4px}.figure figcaption{font-size:.9rem;color:var(--muted);margin:10px 4px 2px}.hint{font-size:.82rem;color:var(--blue);font-weight:700}table{width:100%;border-collapse:collapse;font-size:.94rem}th,td{padding:11px 10px;text-align:center;border-bottom:1px solid var(--line)}th{background:#f2f7fb;color:#304257}td:first-child,th:first-child{text-align:left}.ok{font-weight:750;color:var(--green)}pre{background:#102033;color:#eaf2fb;padding:16px;border-radius:12px;overflow:auto;font-size:.88rem}a{color:var(--blue);font-weight:700;text-underline-offset:3px}.footer{color:var(--muted);font-size:.87rem;padding:20px 4px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:19px}.button{display:inline-block;background:var(--blue);color:white;text-decoration:none;padding:9px 13px;border-radius:9px;font-size:.9rem}.button.alt{background:#e8f1f9;color:#12558d}.method{counter-reset:step}.method li{margin:13px 0;padding-left:5px}.dialog{width:min(96vw,1320px);max-height:92vh;border:0;border-radius:14px;padding:0;background:#fff;box-shadow:0 22px 90px #0008}.dialog::backdrop{background:#081524cc}.dialog-body{padding:17px;max-height:92vh;overflow:auto}.dialog img{display:block;width:100%;height:auto}.close{float:right;border:1px solid var(--line);background:white;border-radius:8px;padding:7px 11px;cursor:pointer;font-weight:700}.dialog-title{margin:4px 0 14px;font-size:1rem}@media(max-width:700px){.wrap{padding:0 15px 45px}.hero{padding:45px 0 28px}.card{padding:21px}.grid{grid-template-columns:1fr}.hero h1{font-size:2.2rem}table{font-size:.8rem}th,td{padding:8px 4px}}
   </style>
 </head>
 <body>
@@ -36,21 +36,34 @@
       <p><code>models/tft.va</code>는 공통 3단자 Verilog-A TFT 모델이다. <code>models/tft_cards.json</code>에는 PMOS형 LTPS 카드와 NMOS형 oxide TFT 카드가 들어 있다. 먼저 두 카드의 전달 특성을 자동 검사한다.</p>
       <pre>bash scripts/run_tft_iv.sh
 # PASS: bundled PMOS and NMOS TFT cards passed the first I–V check</pre>
-      <p>이후 <code>bash scripts/run_gw_example.sh 0.0</code>를 실행하면 같은 NMOS 카드로 6단 GW 체인을 돌린다. 카드 값은 교육용 합성 값이며 실제 제품 측정 카드가 아니다.</p>
+      <p>이후 <code>bash scripts/run_gw_example.sh 0.0</code>를 실행하면 PMOS·NMOS 카드를 함께 쓰는 6단 GW 체인을 돌린다. 카드 값은 교육용 합성 값이며 실제 제품 측정 카드가 아니다.</p>
     </section>
 
     <section class="card">
       <h2>회로 구조</h2>
       <p>각 스테이지는 complementary TFT 래치(M1~M7)와 출력 경로(M8~M10)로 구성했다. M1·M3·M8은 PMOS 카드, 나머지는 NMOS 카드를 쓴다. VST로 시작한 캐리 신호가 6단을 지나며 CKA/CKB에 맞춰 OUT1부터 OUT6까지 순차 펄스를 만든다.</p>
-      <figure class="figure"><img src="figures/gw_schematic.svg" alt="6단 GW 체인 회로도"><figcaption>합성 TFT 카드와 교육용 크기·부하·클록을 사용한 6단 GW 체인.</figcaption></figure>
+      <figure class="figure"><button class="zoomable" type="button" data-zoom="figures/gw_schematic.svg" data-title="6단 GW 체인 연결도"><img src="figures/gw_schematic.svg" alt="6단 GW 체인 연결도"></button><figcaption>6개의 동일 스테이지를 carry 노드 g1~g6로 연결한다. <span class="hint">클릭하면 확대</span></figcaption></figure>
+      <figure class="figure"><button class="zoomable" type="button" data-zoom="figures/gw_stage_transistor_schematic.svg" data-title="GW 한 스테이지 트랜지스터 회로도"><img src="figures/gw_stage_transistor_schematic.svg" alt="M1부터 M10까지의 GW 한 스테이지 회로도"></button><figcaption>M1·M3·M8은 PMOS, M2·M4~M7·M9·M10은 NMOS다. Rrow=2 kΩ, Crow=20 pF 부하를 둔다. <span class="hint">클릭하면 확대</span></figcaption></figure>
     </section>
 
     <section class="card">
       <h2>파형과 판정 기준</h2>
       <p>프레임마다 OUT1→OUT6이 각자 할당된 시간 슬롯에서 정확히 한 번씩 펄스가 나와야 PASS다. 중복 펄스, 누락 펄스 또는 다른 슬롯의 펄스는 FAIL이다.</p>
-      <figure class="figure"><img src="figures/gw_6stage_actual_waveform.svg" alt="실제 ngspice 6단 GW 순차 파형"><figcaption>실제 ngspice 출력 데이터의 1프레임 렌더링. OUT1~OUT6은 각각 한 번만 +8 V까지 올라가며, 최저 전압은 −8.02 V 이내다.</figcaption></figure>
+      <figure class="figure"><button class="zoomable" type="button" data-zoom="figures/gw_6stage_actual_waveform.svg" data-title="실제 ngspice 6단 GW 출력 파형"><img src="figures/gw_6stage_actual_waveform.svg" alt="실제 ngspice 6단 GW 순차 파형"></button><figcaption>실제 ngspice 출력 데이터의 1프레임 렌더링. OUT1~OUT6은 각각 한 번만 +8 V까지 올라가며, 최저 전압은 −8.02 V 이내다. <span class="hint">클릭하면 확대</span></figcaption></figure>
       <pre>bash scripts/run_gw_example.sh 0.0
-# PASS: six one-hot GW pulses reproduced with the synthetic NMOS model</pre>
+# PASS: six one-hot GW pulses reproduced with bundled PMOS/NMOS TFT cards</pre>
+    </section>
+
+    <section class="card">
+      <h2>시뮬레이션 방식</h2>
+      <ol class="method">
+        <li><b>모델 컴파일.</b> <code>openvaf -o build/tft.osdi models/tft.va</code>로 3단자 Verilog-A TFT 모델을 ngspice OSDI 모듈로 컴파일한다.</li>
+        <li><b>카드 배정.</b> <code>models/tft_cards.json</code>의 LTPS PMOS 카드를 M1·M3·M8에, oxide NMOS 카드를 나머지 7개 TFT에 배정한다. <code>dVth</code>는 NMOS 카드의 VTH에만 더한다.</li>
+        <li><b>넷리스트 생성.</b> Python이 6개의 <code>gw_stage</code> 서브회로, ±8 V 전원, VST, 교대 CKA/CKB, 더미 입력과 초기 조건(Q=VGL, QB=VGH)을 생성한다.</li>
+        <li><b>과도해석.</b> ngspice가 <code>pre_osdi build/tft.osdi</code>로 모델을 불러온 뒤 Gear 방법으로 <code>tran 10n 87.5u 0 20n uic</code>를 실행한다.</li>
+        <li><b>원시 데이터 저장.</b> <code>results/gw_6stage.dat</code>에 VST, CKA, CKB, OUT1~OUT6을 기록한다.</li>
+        <li><b>자동 판정.</b> 0 V 상승·하강 교차로 펄스를 세고, 각 OUT의 해당 슬롯 1개 펄스·전체 1개 펄스·min≥−8.5 V·max≥+7.5 V를 모두 만족할 때 PASS다.</li>
+      </ol>
     </section>
 
     <section class="card">
@@ -67,9 +80,21 @@
       <h2>논문과 이 예제의 관계</h2>
       <p>대상 논문은 Im 외, “Oxide TFT-Based Scan Driver Circuit With Blocking Structure for Multisignal Output,” <i>Journal of the Society for Information Display</i>, 2026, DOI <a href="https://doi.org/10.1002/jsid.70114">10.1002/jsid.70114</a>다.</p>
       <ul><li>공개 초록: blocking structure로 제어 노드를 분리해 클록 간섭을 줄이는 다중 출력 scan driver를 제안한다.</li><li>논문은 42.3% 전력 감소와 -1.6~+0.8 V 문턱전압 범위를 보고한다.</li><li>원문은 Wiley 유료 Version of Record라 PDF를 이 저장소에 복제하지 않았다. DOI에서 합법적으로 열람해야 한다.</li><li>이 저장소는 순차 GW 펄스의 실행 가능한 교육용 예제를 제공하며, 논문 회로의 독립 재현 결과는 아니다.</li></ul>
-      <div class="actions"><a class="button alt" href="docs/paper_and_verification_ko.md">검증 범위 상세</a><a class="button alt" href="docs/gw_validation_result_ko.md">실행 결과 원문</a><a class="button alt" href="references/im_2026_jsid_70114.bib">논문 BibTeX</a></div>
+      <div class="actions"><a class="button alt" href="docs/paper_and_verification_ko.html">검증 범위 상세</a><a class="button alt" href="docs/gw_validation_result_ko.html">실행 결과 상세</a><a class="button alt" href="references/im_2026_jsid_70114.bib">논문 BibTeX</a></div>
     </section>
     <footer class="footer">공개 교육용 예제 · 합성 TFT 카드 · 실제 제품/패널 성능 예측 용도 아님</footer>
   </main>
+  <dialog class="dialog" id="zoom-dialog" aria-labelledby="zoom-title"><div class="dialog-body"><button class="close" type="button" id="zoom-close">닫기</button><p class="dialog-title" id="zoom-title"></p><img id="zoom-image" src="figures/gw_schematic.svg" alt="확대 이미지"></div></dialog>
+  <script>
+    const dialog = document.getElementById('zoom-dialog');
+    const zoomImage = document.getElementById('zoom-image');
+    const zoomTitle = document.getElementById('zoom-title');
+    document.querySelectorAll('[data-zoom]').forEach((button) => button.addEventListener('click', () => {
+      zoomImage.src = button.dataset.zoom; zoomImage.alt = button.querySelector('img').alt;
+      zoomTitle.textContent = button.dataset.title; dialog.showModal();
+    }));
+    document.getElementById('zoom-close').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+  </script>
 </body>
 </html>
