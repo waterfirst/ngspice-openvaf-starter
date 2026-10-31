@@ -16,7 +16,7 @@
     <header class="hero">
       <div class="eyebrow">NGSPICE + OPENVAF · EDUCATIONAL REPRODUCIBILITY NOTE</div>
       <h1>6단 GW 회로<br>시뮬레이션 검증 보고서</h1>
-      <p>합성 oxide-NMOS TFT 모델을 OpenVAF OSDI로 컴파일하고, ngspice 과도해석으로 OUT1~OUT6의 순차 게이트 펄스를 자동 판정했다.</p>
+      <p>PMOS·NMOS TFT 모델을 OpenVAF OSDI로 컴파일하고, ngspice 과도해석으로 OUT1~OUT6의 순차 게이트 펄스와 레일 전압을 자동 판정했다.</p>
       <div class="badges"><span class="badge">실행일 2026-10-31</span><span class="badge">6-stage GW chain</span><span class="badge">OSDI transient simulation</span></div>
       <div class="actions"><a class="button" href="https://github.com/waterfirst/ngspice-openvaf-starter">GitHub 저장소</a><a class="button alt" href="README.md">설치 안내</a></div>
     </header>
@@ -26,9 +26,9 @@
       <div class="grid">
         <div class="metric"><strong class="pass">PASS</strong><span>기준 카드 dVth = 0 V<br>OUT1~OUT6 모두 1펄스</span></div>
         <div class="metric"><strong class="pass">PASS</strong><span>dVth = +0.8 V<br>OUT1~OUT6 모두 1펄스</span></div>
-        <div class="metric"><strong class="fail">FAIL</strong><span>dVth = -1.6 V<br>OUT2~OUT6 슬롯 판정 실패</span></div>
+        <div class="metric"><strong class="pass">PASS</strong><span>dVth = -1.6 V<br>OUT1~OUT6 모두 1펄스</span></div>
       </div>
-      <p class="note"><b>중요:</b> 이 예제는 논문의 blocking-structure 회로를 재현한 것이 아니다. 공개 특허의 래치+출력 경로에서 출발한 교육용 ratioed-NMOS 체인이다. 따라서 논문의 전력 42.3% 절감이나 -1.6~+0.8 V 안정 동작을 이 결과로 주장하지 않는다.</p>
+      <p class="note"><b>중요:</b> 이 예제는 논문의 blocking-structure 회로를 재현한 것이 아니다. 공개 특허의 래치+출력 경로에서 출발한 교육용 complementary-TFT 체인이다. 따라서 논문의 전력 42.3% 절감이나 -1.6~+0.8 V 안정 동작을 이 결과로 주장하지 않는다.</p>
     </section>
 
     <section class="card">
@@ -41,14 +41,14 @@
 
     <section class="card">
       <h2>회로 구조</h2>
-      <p>각 스테이지는 ratioed NMOS 래치(M1~M7)와 출력 경로(M8~M10)로 구성했다. VST로 시작한 캐리 신호가 6단을 지나며 CKA/CKB에 맞춰 OUT1부터 OUT6까지 순차 펄스를 만든다.</p>
+      <p>각 스테이지는 complementary TFT 래치(M1~M7)와 출력 경로(M8~M10)로 구성했다. M1·M3·M8은 PMOS 카드, 나머지는 NMOS 카드를 쓴다. VST로 시작한 캐리 신호가 6단을 지나며 CKA/CKB에 맞춰 OUT1부터 OUT6까지 순차 펄스를 만든다.</p>
       <figure class="figure"><img src="figures/gw_schematic.svg" alt="6단 GW 체인 회로도"><figcaption>합성 TFT 카드와 교육용 크기·부하·클록을 사용한 6단 GW 체인.</figcaption></figure>
     </section>
 
     <section class="card">
       <h2>파형과 판정 기준</h2>
       <p>프레임마다 OUT1→OUT6이 각자 할당된 시간 슬롯에서 정확히 한 번씩 펄스가 나와야 PASS다. 중복 펄스, 누락 펄스 또는 다른 슬롯의 펄스는 FAIL이다.</p>
-      <figure class="figure"><img src="figures/gw_5frame_waveform.svg" alt="5프레임 GW 순차 파형"><figcaption>5프레임 기준 파형. 점선은 프레임 경계이며, 실제 스크립트는 파형 이미지를 보는 대신 슬롯별 펄스 수를 수치로 판정한다.</figcaption></figure>
+      <figure class="figure"><img src="figures/gw_6stage_actual_waveform.svg" alt="실제 ngspice 6단 GW 순차 파형"><figcaption>실제 ngspice 출력 데이터의 1프레임 렌더링. OUT1~OUT6은 각각 한 번만 +8 V까지 올라가며, 최저 전압은 −8.02 V 이내다.</figcaption></figure>
       <pre>bash scripts/run_gw_example.sh 0.0
 # PASS: six one-hot GW pulses reproduced with the synthetic NMOS model</pre>
     </section>
@@ -56,7 +56,7 @@
     <section class="card">
       <h2>문턱전압 스윕: 실제 실행 결과</h2>
       <table><thead><tr><th>dVth</th><th>OUT1</th><th>OUT2</th><th>OUT3</th><th>OUT4</th><th>OUT5</th><th>OUT6</th><th>전체</th></tr></thead><tbody>
-        <tr><td>-1.6 V</td><td class="ok">PASS</td><td class="no">FAIL</td><td class="no">FAIL</td><td class="no">FAIL</td><td class="no">FAIL</td><td class="no">FAIL</td><td class="no">FAIL</td></tr>
+        <tr><td>-1.6 V</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td></tr>
         <tr><td>0.0 V</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td></tr>
         <tr><td>+0.8 V</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td></tr>
       </tbody></table>

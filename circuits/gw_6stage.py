@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run a six-stage educational oxide-NMOS gate-waveform (GW) chain.
+"""Run a six-stage educational complementary-TFT gate-waveform (GW) chain.
 
 The circuit is inspired by the latch-and-transmission-gate topology in
 KR20170071217A Fig. 3.  It is an educational topology exercise; it is not a
@@ -17,9 +17,10 @@ OUT = ROOT / "results"
 N = 6
 VGH, VGL = 8.0, -8.0
 SLOT, PW, EDGE, T0 = 5e-6, 4e-6, 50e-9, 10e-6
-SIZES = {"M1": 6, "M2": 24, "M3": 6, "M4": 24, "M5": 120,
+SIZES = {"M1": 6, "M2": 12, "M3": 6, "M4": 12, "M5": 120,
          "M6": 60, "M7": 20, "M8": 200, "M9": 1200, "M10": 900}
-CARD = json.loads((ROOT / "models" / "tft_cards.json").read_text())["oxide_nmos_25c"]
+CARDS = json.loads((ROOT / "models" / "tft_cards.json").read_text())
+PMOS = {"M1", "M3", "M8"}
 
 
 def pwl(points):
@@ -31,9 +32,11 @@ def slot(k):
 
 
 def model_lines(dvth):
-    lines = [f"* synthetic oxide-NMOS card; dVth={dvth:+.3f} V"]
+    lines = [f"* complementary synthetic TFT cards; NMOS dVth={dvth:+.3f} V"]
     for name, width in SIZES.items():
-        card = {**CARD, "VTH": CARD["VTH"] + dvth, "W": width * 1e-6,
+        base = CARDS["ltps_pmos_25c"] if name in PMOS else CARDS["oxide_nmos_25c"]
+        shift = 0.0 if name in PMOS else dvth
+        card = {**base, "VTH": base["VTH"] + shift, "W": width * 1e-6,
                 "L": 4e-6, "COV": 3e-10}
         lines.append(".model t%s tft %s" % (name, " ".join(
             f"{key}={value:.8g}" for key, value in card.items() if key != "description")))
@@ -42,12 +45,13 @@ def model_lines(dvth):
 
 def stage_lines():
     return [
-        ".subckt gw_stage gpre gpost cka ckb out vgh vgl rst",
-        "* Ratioed NMOS latch plus output transmission path",
-        "NM1 qb vgh vgh tM1", "NM2 qb q vgl tM2",
-        "NM3 q vgh rst tM3", "NM4 q qb vgl tM4",
+        ".subckt gw_stage gpre gpost cka ckb carry out vgh vgl rst",
+        "* Complementary latch plus transmission-gate output path",
+        "NM1 qb q vgh tM1", "NM2 qb q vgl tM2",
+        "NM3 q qb rst tM3", "NM4 q qb vgl tM4",
         "NM5 qb gpre x tM5", "NM6 q gpost x tM6", "NM7 x cka vgl tM7",
-        "NM8 out qb ckb tM8", "NM9 ckb q out tM9", "NM10 out qb vgl tM10",
+        "NM8 carry qb ckb tM8", "NM9 ckb q carry tM9", "NM10 carry qb vgl tM10",
+        "Rrow carry out 2k", "Crow out 0 20p",
         ".ends gw_stage",
     ]
 
@@ -67,12 +71,11 @@ def build(dvth):
              f"Vcka cka 0 {pwl(cka)}", f"Vckb ckb 0 {pwl(ckb)}",
              f"Vvst vst 0 {pwl(vst)}", f"Vrst rst 0 {VGH}", f"Vdmy dmy 0 {pwl(dmy)}"]
     for i in range(1, N + 1):
-        pre = "vst" if i == 1 else f"out{i - 1}"
-        post = "dmy" if i == N else f"out{i + 1}"
+        pre = "vst" if i == 1 else f"g{i - 1}"
+        post = "dmy" if i == N else f"g{i + 1}"
         clocks = ("cka", "ckb") if i % 2 else ("ckb", "cka")
-        lines.append(f"X{i} {pre} {post} {clocks[0]} {clocks[1]} out{i} vgh vgl rst gw_stage")
-    lines.append("Cdummy dmy 0 20p")
-    ic = " ".join(f"v(x{i}.q)={VGL} v(x{i}.qb)={VGH} v(out{i})={VGL}" for i in range(1, N + 1))
+        lines.append(f"X{i} {pre} {post} {clocks[0]} {clocks[1]} g{i} out{i} vgh vgl rst gw_stage")
+    ic = " ".join(f"v(x{i}.q)={VGL} v(x{i}.qb)={VGH} v(g{i})={VGL}" for i in range(1, N + 1))
     vectors = " ".join(f"v(out{i})" for i in range(1, N + 1))
     lines += [f".ic {ic}", ".options method=gear reltol=1e-4 abstol=1e-12 vntol=1e-6 gmin=1e-12",
               ".control", "set noaskquit", "pre_osdi build/tft.osdi",
@@ -93,10 +96,13 @@ def evaluate(data):
     time = data[:, 0]
     verdict = []
     for i in range(N):
-        pulses = pulse_count(time, data[:, 4 + i])
+        value = data[:, 4 + i]
+        pulses = pulse_count(time, value)
         expected = (T0 + (i + 1) * SLOT, T0 + (i + 2) * SLOT)
         good = [p for p in pulses if p[0] > expected[0] - 0.2 * SLOT and p[1] < expected[1] + 0.5 * SLOT]
-        verdict.append(len(good) == 1 and len(pulses) == 1)
+        rail_ok = value.min() >= VGL - 0.5 and value.max() >= VGH - 0.5
+        verdict.append((len(good) == 1 and len(pulses) == 1 and rail_ok,
+                        value.min(), value.max(), good))
     return verdict
 
 
@@ -111,10 +117,14 @@ def main():
         print(run.stdout + run.stderr, file=sys.stderr)
         raise SystemExit(run.returncode)
     result = evaluate(np.loadtxt(OUT / "gw_6stage.dat", skiprows=1))
-    print("GW slot test:", ["PASS" if x else "FAIL" for x in result])
-    if result != [True] * N:
+    passed = [x[0] for x in result]
+    for index, (_, vmin, vmax, pulses) in enumerate(result, start=1):
+        window = ", ".join(f"{a * 1e6:.3f}–{b * 1e6:.3f} us" for a, b in pulses) or "none"
+        print(f"OUT{index}: min={vmin:.3f} V max={vmax:.3f} V pulse={window}")
+    print("GW slot and rail test:", ["PASS" if x else "FAIL" for x in passed])
+    if passed != [True] * N:
         raise SystemExit("FAIL: expected exactly one pulse in each OUT1..OUT6 slot")
-    print("PASS: six one-hot GW pulses reproduced with the synthetic NMOS model")
+    print("PASS: six one-hot GW pulses reproduced with bundled PMOS/NMOS TFT cards")
 
 
 if __name__ == "__main__":
