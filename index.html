@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ngspice와 OpenVAF로 실행한 6단 GW 게이트 파형 체인 검증 보고서">
+  <title>GW 회로 시뮬레이션 검증 보고서</title>
+  <style>
+    :root { --ink:#162233; --muted:#566578; --line:#dce4ec; --paper:#fff; --wash:#f4f8fc; --blue:#1263ad; --green:#087c54; --amber:#9a5b00; --red:#b42318; }
+    *{box-sizing:border-box} body{margin:0;background:var(--wash);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,"Noto Sans KR",sans-serif;line-height:1.65}
+    .wrap{max-width:1120px;margin:auto;padding:0 24px 64px}.hero{padding:70px 0 45px}.eyebrow{color:var(--blue);font-weight:800;letter-spacing:.08em;font-size:.78rem}.hero h1{font-size:clamp(2rem,5vw,3.8rem);line-height:1.13;letter-spacing:-.055em;margin:10px 0 17px}.hero p{font-size:1.1rem;color:var(--muted);max-width:760px;margin:0}.badges{display:flex;gap:9px;flex-wrap:wrap;margin-top:24px}.badge{padding:5px 11px;border-radius:999px;background:#e7f2ff;color:#075092;font-size:.83rem;font-weight:750}.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:30px;margin:18px 0;box-shadow:0 7px 22px #1d44680b}.card h2{font-size:1.45rem;letter-spacing:-.03em;margin:0 0 13px}.card h3{font-size:1.05rem;margin:25px 0 8px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.metric{border:1px solid var(--line);border-radius:13px;padding:17px}.metric strong{display:block;font-size:1.6rem;letter-spacing:-.04em}.metric span{font-size:.87rem;color:var(--muted)}.pass{color:var(--green)}.fail{color:var(--red)}.note{border-left:4px solid var(--amber);background:#fff9ed;padding:14px 17px;border-radius:0 10px 10px 0;color:#624300}.figure{margin:18px 0;padding:14px;background:#fbfdff;border:1px solid var(--line);border-radius:13px}.figure img{width:100%;display:block}.figure figcaption{font-size:.9rem;color:var(--muted);margin:10px 4px 2px}table{width:100%;border-collapse:collapse;font-size:.94rem}th,td{padding:11px 10px;text-align:center;border-bottom:1px solid var(--line)}th{background:#f2f7fb;color:#304257}td:first-child,th:first-child{text-align:left}.ok{font-weight:750;color:var(--green)}.no{font-weight:750;color:var(--red)}pre{background:#102033;color:#eaf2fb;padding:16px;border-radius:12px;overflow:auto;font-size:.88rem}a{color:var(--blue);font-weight:700;text-underline-offset:3px}.footer{color:var(--muted);font-size:.87rem;padding:20px 4px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:19px}.button{display:inline-block;background:var(--blue);color:white;text-decoration:none;padding:9px 13px;border-radius:9px;font-size:.9rem}.button.alt{background:#e8f1f9;color:#12558d}@media(max-width:700px){.wrap{padding:0 15px 45px}.hero{padding:45px 0 28px}.card{padding:21px}.grid{grid-template-columns:1fr}.hero h1{font-size:2.2rem}table{font-size:.8rem}th,td{padding:8px 4px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <div class="eyebrow">NGSPICE + OPENVAF · EDUCATIONAL REPRODUCIBILITY NOTE</div>
+      <h1>6단 GW 회로<br>시뮬레이션 검증 보고서</h1>
+      <p>합성 oxide-NMOS TFT 모델을 OpenVAF OSDI로 컴파일하고, ngspice 과도해석으로 OUT1~OUT6의 순차 게이트 펄스를 자동 판정했다.</p>
+      <div class="badges"><span class="badge">실행일 2026-10-31</span><span class="badge">6-stage GW chain</span><span class="badge">OSDI transient simulation</span></div>
+      <div class="actions"><a class="button" href="https://github.com/waterfirst/ngspice-openvaf-starter">GitHub 저장소</a><a class="button alt" href="README.md">설치 안내</a></div>
+    </header>
+
+    <section class="card">
+      <h2>결론</h2>
+      <div class="grid">
+        <div class="metric"><strong class="pass">PASS</strong><span>기준 카드 dVth = 0 V<br>OUT1~OUT6 모두 1펄스</span></div>
+        <div class="metric"><strong class="pass">PASS</strong><span>dVth = +0.8 V<br>OUT1~OUT6 모두 1펄스</span></div>
+        <div class="metric"><strong class="fail">FAIL</strong><span>dVth = -1.6 V<br>OUT2~OUT6 슬롯 판정 실패</span></div>
+      </div>
+      <p class="note"><b>중요:</b> 이 예제는 논문의 blocking-structure 회로를 재현한 것이 아니다. 공개 특허의 래치+출력 경로에서 출발한 교육용 ratioed-NMOS 체인이다. 따라서 논문의 전력 42.3% 절감이나 -1.6~+0.8 V 안정 동작을 이 결과로 주장하지 않는다.</p>
+    </section>
+
+    <section class="card">
+      <h2>회로 구조</h2>
+      <p>각 스테이지는 ratioed NMOS 래치(M1~M7)와 출력 경로(M8~M10)로 구성했다. VST로 시작한 캐리 신호가 6단을 지나며 CKA/CKB에 맞춰 OUT1부터 OUT6까지 순차 펄스를 만든다.</p>
+      <figure class="figure"><img src="figures/gw_schematic.svg" alt="6단 GW 체인 회로도"><figcaption>합성 TFT 카드와 교육용 크기·부하·클록을 사용한 6단 GW 체인.</figcaption></figure>
+    </section>
+
+    <section class="card">
+      <h2>파형과 판정 기준</h2>
+      <p>프레임마다 OUT1→OUT6이 각자 할당된 시간 슬롯에서 정확히 한 번씩 펄스가 나와야 PASS다. 중복 펄스, 누락 펄스 또는 다른 슬롯의 펄스는 FAIL이다.</p>
+      <figure class="figure"><img src="figures/gw_5frame_waveform.svg" alt="5프레임 GW 순차 파형"><figcaption>5프레임 기준 파형. 점선은 프레임 경계이며, 실제 스크립트는 파형 이미지를 보는 대신 슬롯별 펄스 수를 수치로 판정한다.</figcaption></figure>
+      <pre>bash scripts/run_gw_example.sh 0.0
+# PASS: six one-hot GW pulses reproduced with the synthetic NMOS model</pre>
+    </section>
+
+    <section class="card">
+      <h2>문턱전압 스윕: 실제 실행 결과</h2>
+      <table><thead><tr><th>dVth</th><th>OUT1</th><th>OUT2</th><th>OUT3</th><th>OUT4</th><th>OUT5</th><th>OUT6</th><th>전체</th></tr></thead><tbody>
+        <tr><td>-1.6 V</td><td class="ok">PASS</td><td class="no">FAIL</td><td class="no">FAIL</td><td class="no">FAIL</td><td class="no">FAIL</td><td class="no">FAIL</td><td class="no">FAIL</td></tr>
+        <tr><td>0.0 V</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td></tr>
+        <tr><td>+0.8 V</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td><td class="ok">PASS</td></tr>
+      </tbody></table>
+      <p>dVth는 기준 합성 NMOS 카드의 VTH = +0.595 V에 더한 값이다. 다른 TFT 모델, 토폴로지, 부하, 클록에서는 결과가 달라질 수 있다.</p>
+    </section>
+
+    <section class="card">
+      <h2>논문과 이 예제의 관계</h2>
+      <p>대상 논문은 Im 외, “Oxide TFT-Based Scan Driver Circuit With Blocking Structure for Multisignal Output,” <i>Journal of the Society for Information Display</i>, 2026, DOI <a href="https://doi.org/10.1002/jsid.70114">10.1002/jsid.70114</a>다.</p>
+      <ul><li>공개 초록: blocking structure로 제어 노드를 분리해 클록 간섭을 줄이는 다중 출력 scan driver를 제안한다.</li><li>논문은 42.3% 전력 감소와 -1.6~+0.8 V 문턱전압 범위를 보고한다.</li><li>원문은 Wiley 유료 Version of Record라 PDF를 이 저장소에 복제하지 않았다. DOI에서 합법적으로 열람해야 한다.</li><li>이 저장소는 순차 GW 펄스의 실행 가능한 교육용 예제를 제공하며, 논문 회로의 독립 재현 결과는 아니다.</li></ul>
+      <div class="actions"><a class="button alt" href="docs/paper_and_verification_ko.md">검증 범위 상세</a><a class="button alt" href="docs/gw_validation_result_ko.md">실행 결과 원문</a><a class="button alt" href="references/im_2026_jsid_70114.bib">논문 BibTeX</a></div>
+    </section>
+    <footer class="footer">공개 교육용 예제 · 합성 TFT 카드 · 실제 제품/패널 성능 예측 용도 아님</footer>
+  </main>
+</body>
+</html>
