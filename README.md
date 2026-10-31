@@ -1,4 +1,4 @@
-# ngspice + OpenVAF Starter
+# ngspice + OpenVAF 간단 회로 시뮬레이션 안내
 
 Ubuntu에서 Verilog-A 모델을 OpenVAF로 컴파일하고, ngspice OSDI로 불러
 간단한 회로를 시뮬레이션하는 최소 예제다.
