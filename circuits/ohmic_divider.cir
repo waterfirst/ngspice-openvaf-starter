@@ -1,0 +1,14 @@
+* OpenVAF/OSDI example: 1 V source and two 1 kOhm resistors in series.
+* Expected result: V(out) = 0.5 V and I(V1) = -0.5 mA.
+
+.model rmodel ohmic R=1k
+V1 in 0 DC 1
+N1 in out rmodel
+N2 out 0 rmodel
+
+.control
+pre_osdi ../build/ohmic.osdi
+op
+print v(in) v(out) i(V1)
+.endc
+.end

@@ -1,0 +1,13 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Minimal two-terminal Verilog-A resistor for the OpenVAF + OSDI example.
+module ohmic(p, n);
+  inout p, n;
+  electrical p, n;
+  parameter real R = 1.0e3 from (0:inf);
+
+  analog begin
+    I(p, n) <+ V(p, n) / R;
+  end
+endmodule
