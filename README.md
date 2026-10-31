@@ -10,6 +10,25 @@ GitHub Pages 보고서는 [`index.html`](index.html)이다.
 2. **6단 GW 펄스 체인** — 합성 oxide-NMOS TFT 모델을 OSDI로 만들고, OUT1~OUT6이
    순서대로 한 번씩 펄스가 나오는지 검사한다.
 
+## 처음 사용하는 사람: PMOS·NMOS 카드부터 확인
+
+`models/tft.va`는 공통 3단자 TFT Verilog-A 모델이고,
+`models/tft_cards.json`에는 아래 두 개의 **교육용 합성 25 °C 카드**가 들어 있다.
+
+- `ltps_pmos_25c`: PMOS형 LTPS 카드
+- `oxide_nmos_25c`: NMOS형 oxide TFT 카드
+
+아래 한 줄을 먼저 실행해 두 카드가 모두 켜지는지 확인한다.
+
+```bash
+bash scripts/run_tft_iv.sh
+```
+
+정상이라면 두 카드 모두 I–V sweep의 끝점 전류가 시작점보다 100배 이상 크다는
+`PASS`가 나온다. NMOS는 source=0 V에서 `Vg: 0→4 V`, PMOS는 source=+5 V에서
+`Vg: +5→+1 V`로 바이어스한다. 결과 파일은 `results/nmos_iv.dat`, `results/pmos_iv.dat`에 생긴다.
+이 카드들은 공개 교육용 합성 값이며, 실제 패널·제품의 측정 모델이 아니다.
+
 GW 회로도와 5프레임 기준 파형, 논문 주장과 검증 범위는
 [`docs/paper_and_verification_ko.md`](docs/paper_and_verification_ko.md)에 있다.
 실제 문턱전압 스윕 결과는 [`docs/gw_validation_result_ko.md`](docs/gw_validation_result_ko.md)에 있다.

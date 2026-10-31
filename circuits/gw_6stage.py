@@ -9,6 +9,7 @@ from pathlib import Path
 import os
 import subprocess
 import sys
+import json
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,8 +19,7 @@ VGH, VGL = 8.0, -8.0
 SLOT, PW, EDGE, T0 = 5e-6, 4e-6, 50e-9, 10e-6
 SIZES = {"M1": 6, "M2": 24, "M3": 6, "M4": 24, "M5": 120,
          "M6": 60, "M7": 20, "M8": 200, "M9": 1200, "M10": 900}
-CARD = dict(CI=0.000345, VTH=0.595, U0=11.825, GAMMA=0.2083,
-            SS=0.147, LAMBDA=0.00982, GOFF=2.01e-16, POL=-1, TEMPK=298.15)
+CARD = json.loads((ROOT / "models" / "tft_cards.json").read_text())["oxide_nmos_25c"]
 
 
 def pwl(points):
@@ -36,7 +36,7 @@ def model_lines(dvth):
         card = {**CARD, "VTH": CARD["VTH"] + dvth, "W": width * 1e-6,
                 "L": 4e-6, "COV": 3e-10}
         lines.append(".model t%s tft %s" % (name, " ".join(
-            f"{key}={value:.8g}" for key, value in card.items())))
+            f"{key}={value:.8g}" for key, value in card.items() if key != "description")))
     return lines
 
 

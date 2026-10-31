@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "purpose": "Educational synthetic TFT cards for reproducible ngspice/OpenVAF examples.",
+    "warning": "These are not measured production-panel device cards. Do not use them for product prediction."
+  },
+  "ltps_pmos_25c": {
+    "description": "PMOS-like LTPS teaching card, 25 C",
+    "CI": 0.000345,
+    "VTH": -1.30453022,
+    "U0": 71.055792,
+    "GAMMA": 0.092391,
+    "SS": 0.281149,
+    "LAMBDA": 0.020137,
+    "GOFF": 9.923e-14,
+    "POL": 1.0,
+    "TEMPK": 298.15
+  },
+  "oxide_nmos_25c": {
+    "description": "NMOS-like oxide TFT teaching card, 25 C",
+    "CI": 0.000345,
+    "VTH": 0.59477589,
+    "U0": 11.824568,
+    "GAMMA": 0.208293,
+    "SS": 0.146997,
+    "LAMBDA": 0.009823,
+    "GOFF": 2.013e-16,
+    "POL": -1.0,
+    "TEMPK": 298.15
+  }
+}
